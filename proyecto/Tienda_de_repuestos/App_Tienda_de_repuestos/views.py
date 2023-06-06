@@ -4,12 +4,8 @@ from django.template import Template, Context, loader
 from datetime import datetime
 
 # Create your views here.
-
-def home(request):
-    return render(request, "App_Tienda_de_repuestos/index.html")
-
 def products(request):
-    return HttpResponse("Productos")
+    return render(request, "App_Tienda_de_repuestos/index.html")
 
 def my_orders(request):
     return HttpResponse("Mis pedidos")
