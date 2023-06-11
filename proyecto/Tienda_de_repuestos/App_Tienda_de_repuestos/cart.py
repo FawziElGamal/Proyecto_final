@@ -23,7 +23,7 @@ class Cart:
             }
         else:
             for key, value in self.cart.items():
-                if key==str(product.id):
+                if key==str(product.part_number):
                     value["quantity"] = value["quantity"] + 1
                     break
 
@@ -34,14 +34,14 @@ class Cart:
         self.session.modified = True
 
     def erase_product(self, product):
-        product.id = str(product.id)
-        if product.id in self.cart:
-            del self.carro[product.id]
+        product.part_number = str(product.part_number)
+        if product.part_number in self.cart:
+            del self.cart[product.part_number]
             self.save_cart()
 
     def subtract_product(self, product):
         for key, value in self.cart.items():
-            if key==str(product.id):
+            if key==str(product.part_number):
                 value["quantity"] = value["quantity"] - 1
                 if value["quantity"] < 1:
                     self.erase_product(product)

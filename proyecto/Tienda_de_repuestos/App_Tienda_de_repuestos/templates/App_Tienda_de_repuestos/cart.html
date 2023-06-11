@@ -34,19 +34,29 @@
                         <th>Precio Unitario</th>
                         <th>Precio Total</th>
                     </tr>
+                    {% if request.session.cart.items %}
 
-                    {% for producto in productos %}
-                    <tr>
-                        <td>{{ producto.nombre }}</td>
-                        <td>
-                            <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=producto.id %}" style="text-decoration: none;">-</a>
-                            <input type="number" name="cantidad" value="{{ producto.cantidad }}" min="1" readonly>
-                            <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=producto.id %}" style="text-decoration: none;">+</a>
+                        {% for key, value in request.session.cart.items %}
+                            <tr>
+                                <td>{{ value.description }}</td>
+                                <td>
+                                    <a href="{% url 'App_Tienda_de_repuestos:SubProduct' product_id=value.part_number %}" style="text-decoration: none;">-</a>
+                                    <input type="number" name="cantidad" value="{{ value.quantity }}" min="1" readonly>
+                                    <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=value.part_number %}" style="text-decoration: none;">+</a>
+                                </td>
+                                <td>{{ value.price_usd }}</td>
+                                <td>{{ value.precio_total }}</td>
+                            </tr>
+                            {% endfor %}
+
+                    {% else %}
+                        <td colspan="4">
+                            <div class="alert alert-danger text-center">
+                                Sin productos
+                            </div> 
                         </td>
-                        <td>{{ producto.precio }}</td>
-                        <td>{{ producto.precio_total }}</td>
-                    </tr>
-                    {% endfor %}
+                        
+                    {% endif %}
                     
                 </table>
                 <div class="total">

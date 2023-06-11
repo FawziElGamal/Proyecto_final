@@ -97,7 +97,7 @@ def add_product(request, product_id):
 def sub_product(request, product_id):
     cart = Cart(request)
 
-    product = Product.objects.get(id=product_id)
+    product = Product.objects.get(part_number=product_id)
 
     cart.subtract_product(product)
 
@@ -121,13 +121,8 @@ def clear_cart(request, product_id):
 
 
 def shop_cart(request):
-    productos = [
-        {"id": 1, 'nombre': 'Producto 1', 'precio': 100, 'cantidad': 10, },
-        {"id": 2, 'nombre': 'Producto 2', 'precio': 50, 'cantidad': 5, },
-        {"id": 3, 'nombre': 'Producto 3', 'precio': 30, 'cantidad': 3, }
-    ]
     
-    return render(request, "App_Tienda_de_repuestos/cart.html", {'productos': productos})
+    return render(request, "App_Tienda_de_repuestos/cart.html")
 
 
 
