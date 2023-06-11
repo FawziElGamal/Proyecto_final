@@ -1,0 +1,61 @@
+{% extends "App_Tienda_de_repuestos/base.html" %}
+    {% block body %}
+        <html>
+            <head>
+                <title>Carrito de compras</title>
+                <style>
+                    table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    th, td {
+                        padding: 8px;
+                        text-align: left;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                    }
+                    .total {
+                        margin-top: 20px;
+                        font-weight: bold;
+                    }
+                    .confirmar-pedido {
+                        margin-top: 20px;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Carrito de compras</h1>
+                <table>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Total</th>
+                    </tr>
+
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>
+                            <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=producto.id %}" style="text-decoration: none;">-</a>
+                            <input type="number" name="cantidad" value="{{ producto.cantidad }}" min="1" readonly>
+                            <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=producto.id %}" style="text-decoration: none;">+</a>
+                        </td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.precio_total }}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+                <div class="total">
+                    Precio Total: {{ precio_total }}
+                </div>
+                <button class="confirmar-pedido">Confirmar Pedido</button>
+            </body>
+            </html>
+
+
+
+    {% endblock body %}
