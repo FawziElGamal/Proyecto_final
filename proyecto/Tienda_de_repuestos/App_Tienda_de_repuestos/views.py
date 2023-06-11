@@ -88,7 +88,7 @@ def logout_user(request):
 def add_product(request, product_id):
     cart = Cart(request)
 
-    product = Product.objects.get(id=product_id)
+    product = Product.objects.get(part_number=product_id)
 
     cart.add_item(product)
 

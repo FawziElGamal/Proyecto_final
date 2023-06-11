@@ -2,7 +2,9 @@ class Cart:
     def __init__(self, request):
         self.request = request
         self.session = request.session
-        cart = self.session("cart")
+        # cart = self.session("cart")
+        cart = self.session.get("cart")
+
 
         if not cart:
             cart = self.session["cart"] = {}
@@ -11,11 +13,11 @@ class Cart:
         self.cart = cart
 
     def add_item(self, product):
-        if (str(product.id) not in self.cart.keys()):
-            self.cart[product.id] = {
-                "product_id": product.id,
+        if (str(product.part_number) not in self.cart.keys()):
+            self.cart[product.part_number] = {
+                "part_number": product.part_number,
                 "description": product.description,
-                "price": product.price,
+                "price": product.price_usd,
                 "quantity": 1,
                 "image": product.image.url
             }
