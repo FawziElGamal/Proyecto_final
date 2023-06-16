@@ -31,11 +31,8 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display= [
-        'client_dni',
-        'product_id',
-        'quantity',
-        'total_usd_price'
+        'order_date',
+        'client_dni'
     ]
     # search_fields = ('client_dni', 'product_id', 'quantity')
-    ordering = ('client_dni', 'product_id', 'quantity', 'total_usd_price')
-    list_editable = ('quantity',)
+    ordering = ('order_date', 'client_dni')

@@ -19,13 +19,16 @@ class Cart:
                 "description": product.description,
                 "price": product.price_usd,
                 "quantity": 1,
-                "image": product.image.url
+                "image": product.image.url,
+                "total_prices": product.price_usd
             }
         else:
             for key, value in self.cart.items():
                 if key==str(product.part_number):
                     value["quantity"] = value["quantity"] + 1
+                    value["total_prices"] = value["quantity"] * value["price"]
                     break
+
 
         self.save_cart()
     

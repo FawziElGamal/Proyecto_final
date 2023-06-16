@@ -19,7 +19,12 @@ class Product(models.Model):
     price_usd = models.IntegerField(null=False)
 
 class Order(models.Model):
+    order_date = models.DateTimeField(auto_now_add=True)
     client_dni = models.ForeignKey(Client, on_delete=models.CASCADE, null=False)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE, null=False)
-    quantity = models.IntegerField(null=False)
-    total_usd_price = models.IntegerField()
+
+
+class OrderProducts(models.Model):
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    part_number = models.ForeignKey(Product, on_delete=models.CASCADE)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.IntegerField()

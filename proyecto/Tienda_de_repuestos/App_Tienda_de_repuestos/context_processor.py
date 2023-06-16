@@ -1,5 +1,5 @@
 def total_price(request):
-    total = 0
+    total = 100
 
     if request.user.is_authenticated:
         for key, value in request.method['cart'].items():

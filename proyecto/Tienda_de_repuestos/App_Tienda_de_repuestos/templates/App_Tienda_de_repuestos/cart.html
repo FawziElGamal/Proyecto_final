@@ -34,18 +34,20 @@
                         <th>Precio Unitario</th>
                         <th>Precio Total</th>
                     </tr>
+                    <form action="{% url 'App_Tienda_de_repuestos:ConfirmOrder' %}" method="POST"> {% csrf_token %}
                     {% if request.session.cart.items %}
 
                         {% for key, value in request.session.cart.items %}
                             <tr>
                                 <td>{{ value.description }}</td>
                                 <td>
+                                    <input type="hidden" name="part_number" value="{{ value.part_number }}">
                                     <a href="{% url 'App_Tienda_de_repuestos:SubProduct' product_id=value.part_number %}" style="text-decoration: none;">-</a>
-                                    <input type="number" name="cantidad" value="{{ value.quantity }}" min="1" readonly>
+                                    <input type="number" name="cantidad" value="{{ value.quantity }}" min="1" readonly style="width: 48px;">
                                     <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=value.part_number %}" style="text-decoration: none;">+</a>
                                 </td>
-                                <td>{{ value.price_usd }}</td>
-                                <td>{{ value.precio_total }}</td>
+                                <td>${{ value.price }}</td>
+                                <td>${{ value.total_prices }}</td>
                             </tr>
                             {% endfor %}
 
@@ -62,7 +64,9 @@
                 <div class="total">
                     Precio Total: ${{ total_price }}
                 </div>
-                <button class="confirmar-pedido">Confirmar Pedido</button>
+                <br>
+                <input type="submit" class="btn btn-success" value="Confirmar pedido">
+            </form>
             </body>
             </html>
 
