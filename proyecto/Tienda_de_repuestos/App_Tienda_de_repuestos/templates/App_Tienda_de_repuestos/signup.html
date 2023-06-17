@@ -1,0 +1,16 @@
+{% extends "App_Tienda_de_repuestos/base.html" %}
+    {% block title %} Nuevo cliente {% endblock title %}
+
+    {% block body %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+        <table>      
+            {{form.as_table}}
+        </table>      
+            <input type="submit" class="btn btn-success" value="Enviar">
+
+        </form>
+
+    {% endblock body %}
