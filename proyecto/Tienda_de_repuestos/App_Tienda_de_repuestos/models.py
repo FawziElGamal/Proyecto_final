@@ -1,15 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from Users.models import Client
 
 
 # Create your models here.
-
-class Client(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    dni = models.IntegerField(primary_key=True)
-    phone = models.CharField(max_length=20, null=False)
-    address = models.CharField(max_length=20, null=False)
-
 class Product(models.Model):
     part_number = models.CharField(max_length=20, primary_key=True)
     quantity = models.IntegerField(null=False)
@@ -21,6 +14,7 @@ class Product(models.Model):
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)
     client_dni = models.ForeignKey(Client, on_delete=models.CASCADE, null=False)
+    paid = models.BooleanField(default=False)
 
 
 class OrderProducts(models.Model):

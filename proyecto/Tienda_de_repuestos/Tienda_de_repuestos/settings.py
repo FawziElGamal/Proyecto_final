@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Pages',
-    'App_Tienda_de_repuestos'
+    'App_Tienda_de_repuestos',
+    'Users'
 ]
 
 MIDDLEWARE = [
@@ -130,7 +131,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'App_Tienda_de_repuestos:LogIn'
+LOGIN_URL = 'Users:LogIn'
 
 MESSAGE_TAGS = {
     constants.DEBUG: 'debug',

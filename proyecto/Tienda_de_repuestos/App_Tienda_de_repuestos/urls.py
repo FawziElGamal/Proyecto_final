@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import products, my_orders, my_profile, contact, login_user, logout_user, sign_up, shop_cart, add_product, sub_product, clear_cart, delete_product, confirm_order
+from .views import products, my_orders, my_profile, contact, shop_cart, add_product, sub_product, clear_cart, delete_product, confirm_order
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -7,12 +7,9 @@ app_name = 'App_Tienda_de_repuestos'
 
 urlpatterns = [
     path('products/', products, name='products'),
-    path('orders/', my_orders),
+    path('orders/', my_orders, name='Orders'),
     path('profile/', my_profile),
     path('contact/', contact),
-    path('signup/', sign_up, name='SignUp'),
-    path('login/', login_user, name='LogIn'),
-    path('logout/', logout_user, name='LogOut'),
     path('my_cart/', shop_cart, name='Cart'),
     path('add_product/(?P<product_id>[a-zA-Z0-9_-]+)/$', add_product, name='AddProduct'),
     path('substract_product/(?P<product_id>[a-zA-Z0-9_-]+)/$', sub_product, name='SubProduct'),
