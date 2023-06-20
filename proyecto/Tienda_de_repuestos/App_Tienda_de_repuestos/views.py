@@ -4,7 +4,7 @@ from .models import Product, Client, Order, OrderProducts
 from django.db.models import Q
 from .cart import Cart
 from django.contrib.auth.decorators import login_required
-from django.db import models
+from django.db import connection
 
 # Create your views here.
 def products(request):
@@ -19,33 +19,127 @@ def products(request):
 
     return render(request, "App_Tienda_de_repuestos/index.html", {'products': fetch})
 
+def all_orders(request):
+
+    if request.user.is_staff:
+
+        if request.method == "POST":
+            if len(request.POST.getlist('order_paid')) != 0:
+                orders_paied = request.POST.getlist('order_paid')
+                for order_id in orders_paied:
+                    with connection.cursor() as cursor:
+                        cursor.execute(f"UPDATE App_Tienda_de_repuestos_order SET paid = 1 WHERE id = {order_id}")
+                        
+
+
+        unpaid_orders = Order.objects.raw("SELECT id FROM App_Tienda_de_repuestos_order WHERE paid = 0")
+
+        unpaid_orders_list = []
+        for order in unpaid_orders:
+            unpaid_orders_details = OrderProducts.objects.raw(f"SELECT id, part_number_id, quantity FROM App_Tienda_de_repuestos_orderproducts WHERE order_id_id = {order.id}")
+            descriptions = []
+            total_prices = []
+            for info in unpaid_orders_details:
+                description = Product.objects.get(part_number=info.part_number_id)
+                descriptions.append(description)
+                unit_price = info.unit_price
+                quantity = info.quantity
+                unit_price_and_quanity = unit_price * quantity
+                total_prices.append(unit_price_and_quanity)
+    
+            unpaid_orders_list.append({
+                'order': order,
+                'products': unpaid_orders_details,
+                'descriptions': descriptions,
+                'total_price': float((sum(total_prices)))
+            })
+
+        paid_orders = Order.objects.filter(paid=True)
+        paid_orders_list = []
+        for order in paid_orders:
+            paid_orders_details = OrderProducts.objects.raw(f"SELECT id, part_number_id, unit_price, quantity FROM App_Tienda_de_repuestos_orderproducts WHERE order_id_id = {order.id}")
+            descriptions = []
+            total_prices = []
+            for info in paid_orders_details:
+                description = Product.objects.get(part_number=info.part_number_id)
+                descriptions.append(description)
+                unit_price = info.unit_price
+                quantity = info.quantity
+                unit_price_and_quanity = unit_price * quantity
+                total_prices.append(unit_price_and_quanity)
+    
+            paid_orders_list.append({
+                'order': order,
+                'products': paid_orders_details,
+                'descriptions': descriptions,
+                'total_price': float((sum(total_prices)))
+            })
+
+        return render(request, "App_Tienda_de_repuestos/all_orders.html", {'unpaid_orders_list': unpaid_orders_list, 'paid_orders_list': paid_orders_list})
+
+    else:
+        return redirect("App_Tienda_de_repuestos:products")
+
+@login_required
 def my_orders(request):
 
-    unpaid_orders = Order.objects.raw("SELECT id FROM App_Tienda_de_repuestos_order WHERE paid = 0")
+    user = request.user.id
 
-    unpaid_orders_list = []
-    for order in unpaid_orders:
-        unpaid_orders_details = OrderProducts.objects.raw(f"SELECT id, part_number_id, quantity FROM App_Tienda_de_repuestos_orderproducts WHERE order_id_id = {order.id}")
-        descriptions = []
-        for part_number in unpaid_orders_details:
-            description = Product.objects.get(part_number=part_number.part_number_id)
-            descriptions.append(description)
-        unpaid_orders_list.append({
-            'order': order,
-            'products': unpaid_orders_details,
-            'descriptions': descriptions
-        })
+    user_dni = Client.objects.raw(f"SELECT dni FROM Users_client WHERE user_id = {user}")
+    for user in user_dni:
+        user_dni = user.dni
 
-    paid_orders = Order.objects.filter(paid=True)
+    unpaid_orders = Order.objects.raw(f"SELECT id FROM App_Tienda_de_repuestos_order WHERE client_dni_id = '{user_dni}' and paid = 0")
+    
+    if len(unpaid_orders) != 0:
+
+        unpaid_orders_list = []
+        for order in unpaid_orders:
+            unpaid_orders_details = OrderProducts.objects.raw(f"SELECT id, part_number_id, unit_price, quantity FROM App_Tienda_de_repuestos_orderproducts WHERE order_id_id = {order.id}")
+            descriptions = []
+            total_prices = []
+            for info in unpaid_orders_details:
+                description = Product.objects.get(part_number=info.part_number_id)
+                descriptions.append(description)
+                unit_price = info.unit_price
+                quantity = info.quantity
+                unit_price_and_quanity = unit_price * quantity
+                total_prices.append(unit_price_and_quanity)
+    
+            unpaid_orders_list.append({
+                'order': order,
+                'products': unpaid_orders_details,
+                'descriptions': descriptions,
+                'total_price': float((sum(total_prices)))
+            })
+    else:
+        unpaid_orders_list = 0
+
+    paid_orders = Order.objects.raw(f"SELECT id FROM App_Tienda_de_repuestos_order WHERE client_dni_id = '{user_dni}' and paid = 1")
     paid_orders_list = []
     for order in paid_orders:
-        paid_orders_details = OrderProducts.objects.filter(order_id=order.id)
+        paid_orders_details = OrderProducts.objects.raw(f"SELECT id, part_number_id, unit_price, quantity FROM App_Tienda_de_repuestos_orderproducts WHERE order_id_id = {order.id}")
+        descriptions = []
+        total_prices = []
+        for info in paid_orders_details:
+            description = Product.objects.get(part_number=info.part_number_id)
+            descriptions.append(description)
+            unit_price = info.unit_price
+            quantity = info.quantity
+            unit_price_and_quanity = unit_price * quantity
+            total_prices.append(unit_price_and_quanity)
+ 
         paid_orders_list.append({
             'order': order,
             'products': paid_orders_details,
+            'descriptions': descriptions,
+            'total_price': float((sum(total_prices)))
         })
 
-    return render(request, "App_Tienda_de_repuestos/orders.html", {'unpaid_orders_list': unpaid_orders_list, 'paid_orders_list': paid_orders_list})
+    
+    return render(request, "App_Tienda_de_repuestos/my_orders.html", {'unpaid_orders_list': unpaid_orders_list, 'paid_orders_list': paid_orders_list})
+
+
 
 def my_profile(request):
     return HttpResponse("Mi perfil")
@@ -126,7 +220,7 @@ def confirm_order(request):
 
         
 
-    return HttpResponse("Pedido confirmado")
+    return render(request, "App_Tienda_de_repuestos/order_confirm.html")
 
 
 

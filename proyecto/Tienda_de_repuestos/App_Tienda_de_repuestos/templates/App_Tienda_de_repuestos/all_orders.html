@@ -21,6 +21,8 @@
         }
     </style>
 
+    <form method="POST"> 
+    {% csrf_token %} 
     <div>
     <h2>Pendientes de pago</h2>
     <table>
@@ -63,17 +65,20 @@
                 {% endfor %}
             </ul>
             </td>
-            <td>$ Precio total</td>
+            <td>${{ order_item.total_price }}</td>
 
             {% if user.is_staff %}
-                <td><input type="checkbox" name="order_paid" value="{{ order_item.order.id }}" checked /></td>
+                <td><input type="checkbox" name="order_paid" value="{{ order_item.order.id }}"/></td>
             {% endif %}
 
         </tr>
         {% endfor %}
         </tbody>
     </table>
+    <br>
+        <input type="submit" value="Actualizar registros">
     </div>
+    </form>
 
     <div>
     <br>
@@ -103,8 +108,8 @@
             </td>
             <td>
             <ul>
-                {% for product in order_item.products %}
-                <li>{{ order_item.description.part_number }} - {{ order_item.description.description }}</li>
+                {% for description in order_item.descriptions %}
+                    <li>{{ description.description }}</li>
                 {% endfor %}
             </ul>
             </td>
@@ -115,7 +120,7 @@
                 {% endfor %}
             </ul>
             </td>
-            <td>$ Precio total</td>
+            <td>${{ order_item.total_price }}</td>
         </tr>
         {% endfor %}
         </tbody>
