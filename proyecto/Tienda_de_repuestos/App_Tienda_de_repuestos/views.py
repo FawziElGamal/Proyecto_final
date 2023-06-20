@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from .models import Product, Client, Order, OrderProducts
 from django.db.models import Q
 from .cart import Cart
@@ -139,15 +138,6 @@ def my_orders(request):
     
     return render(request, "App_Tienda_de_repuestos/my_orders.html", {'unpaid_orders_list': unpaid_orders_list, 'paid_orders_list': paid_orders_list})
 
-
-
-def my_profile(request):
-    return HttpResponse("Mi perfil")
-
-def contact(request):
-    return HttpResponse("Contacto")
-
-
 def add_product(request, product_id):
     cart = Cart(request)
 
@@ -169,18 +159,18 @@ def sub_product(request, product_id):
 def delete_product(request, product_id):
     cart = Cart(request)
 
-    product = Product.objects.get(id=product_id)
+    product = Product.objects.get(part_number=product_id)
 
     cart.erase_product(product)
 
-    return redirect("App_Tienda_de_repuestos:products")
+    return redirect("App_Tienda_de_repuestos:Cart")
 
-def clear_cart(request, product_id):
+def clear_cart(request):
     cart = Cart(request)
 
     cart.clear_chart()
 
-    return redirect("App_Tienda_de_repuestos:products")
+    return redirect("App_Tienda_de_repuestos:Cart")
 
 @login_required
 def shop_cart(request):
@@ -219,7 +209,6 @@ def confirm_order(request):
             OrderProducts.objects.create(order_id_id=order.id, part_number_id=part_number, unit_price=result.price_usd, quantity=quantity)
 
         
-
     return render(request, "App_Tienda_de_repuestos/order_confirm.html")
 
 

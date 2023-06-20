@@ -1,0 +1,34 @@
+{% extends "App_Tienda_de_repuestos/base.html" %}
+{% block body %}
+
+<h1>Editar mis datos</h1>
+
+<div style="display: flex; align-items: center;">
+    <div style="flex: 1;">
+        <div style="text-align: center;">
+            <div style="width: 150px; height: 150px; border-radius: 50%; overflow: hidden; margin: 0 auto;">
+                <img src="ruta_imagen_avatar.jpg" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h4 style="font-weight: bold;">Nombre Apellido</h4>
+        </div>
+        <ul style="list-style: none;">
+            <li>Nombre de usuario: <span>{{ nombre_usuario }}</span></li>
+            <li>Email: <span>{{ email }}</span></li>
+            <li>DNI: <span>{{ dni }}</span></li>
+            <li>Teléfono: <span>{{ telefono }}</span></li>
+            <li>Dirección: <span>{{ direccion }}</span></li>
+        </ul>
+    </div>
+    <div style="border-left: 1px solid black; padding-left: 20px;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <br>
+            <input type="submit" class="btn btn-success" value="Actualizar datos">
+        </form>
+    </div>
+</div>
+
+{% endblock body %}

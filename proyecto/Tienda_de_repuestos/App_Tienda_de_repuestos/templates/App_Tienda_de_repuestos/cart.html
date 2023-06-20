@@ -39,7 +39,8 @@
 
                         {% for key, value in request.session.cart.items %}
                             <tr>
-                                <td>{{ value.description }}</td>
+                                <td>{{ value.description }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a href="{% url 'App_Tienda_de_repuestos:DeleteProduct' product_id=value.part_number %}">Borrar articulo</a></td>
                                 <td>
                                     <input type="hidden" name="part_number" value="{{ value.part_number }}">
                                     <a href="{% url 'App_Tienda_de_repuestos:SubProduct' product_id=value.part_number %}" style="text-decoration: none;">-</a>
@@ -61,7 +62,9 @@
                     {% endif %}
                     
                 </table>
-                <div class="total">
+                <br>
+                <a href="{% url 'App_Tienda_de_repuestos:ClearCart' %}" style="padding-left: 10px;">Vaciar carrito</a>
+                <div class="total" style="padding-left: 10px;">
                     Precio Total: ${{ total_price }}
                 </div>
                 <br>

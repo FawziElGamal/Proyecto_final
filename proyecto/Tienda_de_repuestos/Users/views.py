@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from App_Tienda_de_repuestos.forms import SignUpForm
+from .forms import SignUpForm, EditProfile
 from django.contrib.auth.models import User
 from .models import Client
 
@@ -56,3 +56,12 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect("App_Tienda_de_repuestos:products")
+
+
+def my_profile(request):
+
+    if request.method == "POST":
+        user = request.user
+    else:
+        form = EditProfile()
+        return render(request, "Users/edit_profile.html", {"form": form})
