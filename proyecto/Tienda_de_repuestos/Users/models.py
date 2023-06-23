@@ -7,3 +7,4 @@ class Client(models.Model):
     dni = models.IntegerField(primary_key=True)
     phone = models.CharField(max_length=20, null=False)
     address = models.CharField(max_length=20, null=False)
+    avatar = models.ImageField(upload_to='Users/avatars')
