@@ -2,25 +2,31 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import SignUpForm, EditProfile
+from .forms import SignUpForm, EditProfileForm
 from django.contrib.auth.models import User
 from .models import Client
-from django.db import connection
+from .signals import delete_old_avatar_file
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def sign_up(request):
 
     if request.method == "POST":
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
 
         if form.is_valid():
             data = form.save()
 
             id_user = User.objects.get(username=form.cleaned_data['username']).pk
 
-            clients = Client(dni=form.cleaned_data['dni'], phone=form.cleaned_data['phone'], address=form.cleaned_data['address'], user_id=id_user)
+            clients = Client(dni=form.cleaned_data['dni'], 
+                            phone=form.cleaned_data['phone'], 
+                            address=form.cleaned_data['address'],
+                            avatar= 'Users/avatars/noneavatar.png',
+                            user_id=id_user)
+                            
             clients.save()
-
+    
             login(request, data)
             return redirect("App_Tienda_de_repuestos:products")
         else:
@@ -58,29 +64,34 @@ def logout_user(request):
     logout(request)
     return redirect("App_Tienda_de_repuestos:products")
 
-
+@login_required
 def my_profile(request):
-        
+
     user = request.user
+    info_user, _ = Client.objects.get_or_create(user_id=user.id)
 
     if request.method == "POST":
-        form = EditProfile(request.POST, request.FILES)
+        form = EditProfileForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
 
-            user.first_name = data["first_name"]
-            user.last_name = data["last_name"]
-            user.email = data["email"]
-            user.save()
-
-            with connection.cursor() as cursor:
-                cursor.execute(f"UPDATE Users_client SET phone = {data['phone']}, address = '{data['address']}' WHERE user_id = {user.id}")
-
+            if data["first_name"]:
+                user.first_name = data["first_name"]
+            if data["last_name"]:
+                user.last_name = data["last_name"]
+            if data["email"]:
+                user.email = data["email"]
+            if data['phone']:
+                info_user.phone = data['phone']
+            if data['address']:
+                info_user.address = data['address']
             if data["avatar"] != None:
-                with connection.cursor() as cursor:
-                    cursor.execute(f"UPDATE Users_client SET avatar = {data['avatar']} WHERE user_id = {user.id}")
+                info_user.avatar = data['avatar']
+            
+            user.save()
+            info_user.save()
 
-        return HttpResponse("Gracia")
+        return redirect("Users:EditProfile")
     else:
         user_info = Client.objects.raw(f"SELECT * FROM Users_client WHERE user_id = {user.id}")
         user_info_list = list()
@@ -90,5 +101,5 @@ def my_profile(request):
             user_info_list.append(info.address)
             user_info_list.append(info.avatar)
 
-        form = EditProfile(initial={"first_name": user.first_name, "last_name": user.last_name, "email": user.email, "phone": user_info_list[1], "address": user_info_list[2]})
+        form = EditProfileForm(initial={"first_name": user.first_name, "last_name": user.last_name, "email": user.email, "phone": user_info_list[1], "address": user_info_list[2]})
         return render(request, "Users/edit_profile.html", {"form": form, "user_info": user_info_list})
