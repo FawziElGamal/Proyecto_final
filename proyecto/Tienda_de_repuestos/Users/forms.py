@@ -3,13 +3,13 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.EmailField(label="Nombre", help_text="Requerido. 150 caracteres o menos. Solo letras, dígitos y @/./+/-/_.")
-    last_name = forms.EmailField(label="Apellido")
+    first_name = forms.CharField(label="Nombre", help_text="Requerido. 150 caracteres o menos. Solo letras, dígitos y @/./+/-/_.")
+    last_name = forms.CharField(label="Apellido")
     dni = forms.IntegerField(label="DNI")
     phone = forms.IntegerField(label="Teléfono")
     email = forms.EmailField(label="Email")
     address = forms.CharField(label="Dirección", max_length=(20))
-    username = forms.EmailField(label="Nombre de usuario (nick)")
+    username = forms.CharField(label="Nombre de usuario (nick)")
     password1 = forms.CharField(label="Contraseña", widget=forms.PasswordInput, help_text="Su contraseña no puede ser muy similar a su otra información personal.\nSu contraseña debe contener al menos 8 caracteres.\n \nSu contraseña no puede ser una contraseña de uso común.\nSu contraseña no puede ser completamente numérica.")
     password2 = forms.CharField(label="Confirmar contraseña", widget=forms.PasswordInput)
     class Meta:

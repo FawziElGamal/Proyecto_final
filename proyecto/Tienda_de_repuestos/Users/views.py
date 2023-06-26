@@ -22,8 +22,8 @@ def sign_up(request):
             clients = Client(dni=form.cleaned_data['dni'], 
                             phone=form.cleaned_data['phone'], 
                             address=form.cleaned_data['address'],
-                            avatar= 'Users/avatars/noneavatar.png',
-                            user_id=id_user)
+                            user_id=id_user,
+                            avatar= 'Users/avatars/noneavatar.png')
                             
             clients.save()
     

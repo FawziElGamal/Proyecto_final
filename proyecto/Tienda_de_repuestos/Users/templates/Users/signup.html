@@ -14,4 +14,14 @@
 
         </form>
 
+        <br>
+
+        {% if messages %}
+            <div class="error">
+            {% for msg in messages %}
+                <p style="color: red; font-weight: bold; font-size: 20px;">{{ msg }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+
     {% endblock body %}
