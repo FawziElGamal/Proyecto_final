@@ -4,6 +4,7 @@ from django.db.models import Q
 from .cart import Cart
 from django.contrib.auth.decorators import login_required
 from django.db import connection
+from decimal import Decimal
 
 # Create your views here.
 def products(request):
@@ -143,6 +144,10 @@ def add_product(request, product_id):
 
     product = Product.objects.get(part_number=product_id)
 
+    # price_usd = float(product.price_usd)
+
+    print(type(product.price_usd))
+
     cart.add_item(product)
 
     return redirect("App_Tienda_de_repuestos:Cart")
@@ -181,8 +186,8 @@ def shop_cart(request):
     for _, cart_items in cart.session.items():
         if isinstance(cart_items, dict):
             for _, value in cart_items.items():
-                unit_price = value.get('price')
-                quantity_selected = value.get('quantity')
+                unit_price = Decimal(str(value.get('price')))
+                quantity_selected = Decimal(str(value.get('quantity')))
                 total_prices = unit_price * quantity_selected
                 total_price.append(total_prices)
         

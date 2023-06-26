@@ -45,7 +45,7 @@
                         <a href="{% url 'App_Tienda_de_repuestos:Cart' %}" class="btn btn-outline-dark" style="margin-top: 0px; font-size: 1rem; width: 130px; height: 40px;">
                             <i class="bi-cart-fill me-1"></i>
                             Carrito
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ Cart.print_items }}</span>
                         </a>
     
                         {% if user.is_authenticated %}

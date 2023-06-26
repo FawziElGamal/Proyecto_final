@@ -9,7 +9,7 @@ class Product(models.Model):
     location = models.CharField(max_length=5)
     description = models.CharField(max_length=50)
     image = models.ImageField(upload_to='App_Tienda_de_repuestos/products')
-    price_usd = models.DecimalField(decimal_places=2, max_digits=10, null=False)
+    price_usd = models.FloatField(null=False)
 
 class Order(models.Model):
     order_date = models.DateTimeField(auto_now_add=True)

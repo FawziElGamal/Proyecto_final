@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 class Cart:
     def __init__(self, request):
         self.request = request
@@ -26,7 +28,7 @@ class Cart:
             for key, value in self.cart.items():
                 if key==str(product.part_number):
                     value["quantity"] = value["quantity"] + 1
-                    value["total_prices"] = value["quantity"] * value["price"]
+                    value["total_prices"] = float(Decimal(str(value["quantity"])) * Decimal(str(value["price"])))
                     break
 
 
@@ -54,3 +56,6 @@ class Cart:
     def clear_chart(self):
         self.session["cart"] = {}
         self.session.modified = True
+
+    def print_items(self):
+        print(len(self.session["cart"]))
