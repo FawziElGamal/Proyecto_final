@@ -1,20 +1,7 @@
 from django.contrib import admin
-from .models import Client, Product, Order, OrderProducts
+from .models import Product, Order, OrderProducts
 
 # Register your models here.
-
-@admin.register(Client)
-class ClientAdmin(admin.ModelAdmin):
-    list_display= [
-        'user',
-        'dni',
-        'phone'
-    ]
-    # search_fields = ('user', 'dni', 'phone')
-    ordering = ('user', 'dni')
-    list_editable = ('phone',)
-
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display= [
@@ -24,7 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
         'description',
         'price_usd'
     ]
-    # search_fields = ('part_number', 'location', 'description', 'price_usd')
+    search_fields = ('part_number', 'location', 'description', 'price_usd')
     ordering = ('part_number', 'location', 'description', 'price_usd')
     list_editable = ('quantity', 'location', 'price_usd')
 
@@ -36,8 +23,8 @@ class OrderAdmin(admin.ModelAdmin):
         'client_dni',
         'paid'
     ]
-    # search_fields = ('client_dni', 'product_id', 'quantity')
-    ordering = ('order_date', 'client_dni')
+    search_fields = ('client_dni', 'order_date')
+    ordering = ('order_date', 'client_dni', 'paid')
     list_editable = ('paid',)
 
 @admin.register(OrderProducts)
@@ -47,6 +34,6 @@ class OrderProductsAdmin(admin.ModelAdmin):
         'part_number_id',
         'quantity'
     ]
-    # search_fields = ('client_dni', 'product_id', 'quantity')
-    ordering = ('order_id_id',)
+    search_fields = ('order_id_id', 'part_number_id', 'quantity')
+    ordering = ('order_id_id', 'part_number_id')
     list_editable = ('quantity',)
