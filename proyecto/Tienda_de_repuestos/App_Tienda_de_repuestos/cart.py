@@ -58,4 +58,4 @@ class Cart:
         self.session.modified = True
 
     def print_items(self):
-        print(len(self.session["cart"]))
+        return len(self.session["cart"])

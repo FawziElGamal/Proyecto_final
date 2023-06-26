@@ -144,10 +144,6 @@ def add_product(request, product_id):
 
     product = Product.objects.get(part_number=product_id)
 
-    # price_usd = float(product.price_usd)
-
-    print(type(product.price_usd))
-
     cart.add_item(product)
 
     return redirect("App_Tienda_de_repuestos:Cart")
