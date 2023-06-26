@@ -21,6 +21,11 @@
                     <li>DNI: <span>{{ user_info.0 }}</span></li>
                     <li>Teléfono: <span>{{ user_info.1 }}</span></li>
                     <li>Dirección: <span>{{ user_info.2 }}</span></li>
+                    {% if user_info.4 %}
+                        <li>Redes/URL: <span style="vertical-align: top;"><a href="{{ user_info.4 }}" title="{{ user_info.4 }}" style="display: inline-block; width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ user_info.4 }}</a></span></li>
+                    {% else %}
+                        <li>Redes/URL: <span>-</span></li>
+                    {% endif %}
                 </ul>
             </div>
             <div style="border-left: 1px solid black; padding-left: 100px; margin-top: 10px;">
@@ -32,7 +37,7 @@
                         {{ form.as_table }}
                     </table>
                     <br>
-                    <input type="submit" class="btn btn-success" value="Actualizar datos">
+                    <input type="submit" class="btn btn-success" value="Actualizar datos" style="margin-bottom: 10px;">
                 </form>
             </div>
         </div>

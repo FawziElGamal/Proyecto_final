@@ -23,6 +23,7 @@ class EditProfileForm(forms.Form):
     phone = forms.IntegerField(label="Teléfono", required=False)
     address = forms.CharField(label="Dirección", max_length=(20), required=False)
     avatar = forms.ImageField(required=False)
+    url = forms.URLField(label="Redes/URL" ,required=False)
     # class Meta:
     #     model = Client
     #     fields = ('first_name', 'last_name', 'email')

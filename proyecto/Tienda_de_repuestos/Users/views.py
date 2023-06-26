@@ -87,6 +87,8 @@ def my_profile(request):
                 info_user.address = data['address']
             if data["avatar"] != None:
                 info_user.avatar = data['avatar']
+            if data["url"]:
+                info_user.url = data['url']
             
             user.save()
             info_user.save()
@@ -100,6 +102,7 @@ def my_profile(request):
             user_info_list.append(info.phone)
             user_info_list.append(info.address)
             user_info_list.append(info.avatar)
+            user_info_list.append(info.url)
 
         form = EditProfileForm(initial={"first_name": user.first_name, "last_name": user.last_name, "email": user.email, "phone": user_info_list[1], "address": user_info_list[2]})
         return render(request, "Users/edit_profile.html", {"form": form, "user_info": user_info_list})
