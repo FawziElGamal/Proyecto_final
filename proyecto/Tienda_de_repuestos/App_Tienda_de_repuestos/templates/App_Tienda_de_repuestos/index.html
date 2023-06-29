@@ -20,10 +20,14 @@
                                 {% endif %}
 
                                 <!-- Product image-->
-                                <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                <a href="{% url 'App_Tienda_de_repuestos:IndividualProduct' product_id=product.part_number %}">
+                                    <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                  </a>
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        <h5 class="fw-bolder">{{ product.description }}</h5>
+                                        <a href="{% url 'App_Tienda_de_repuestos:IndividualProduct' product_id=product.part_number %}" style="text-decoration: none; color: black;">
+                                            <h5 class="fw-bolder">{{ product.description }}</h5>
+                                          </a>
 
                                         <div class="d-flex justify-content-center small text-warning mb-2">
                                             {% for _ in producto.calificacion|make_list %}

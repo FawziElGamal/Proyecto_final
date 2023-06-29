@@ -19,6 +19,14 @@ def products(request):
 
     return render(request, "App_Tienda_de_repuestos/index.html", {'products': fetch})
 
+def individual(request, product_id):
+
+    fetch = Product.objects.filter(part_number=product_id)
+
+    fetchall = Product.objects.exclude(part_number=product_id)[:4]
+
+    return render(request, "App_Tienda_de_repuestos/product_description.html", {'product': fetch, 'allproducts': fetchall})
+
 def all_orders(request):
 
     if request.user.is_staff:
@@ -211,10 +219,3 @@ def confirm_order(request):
 
         
     return render(request, "App_Tienda_de_repuestos/order_confirm.html")
-
-
-
-
-
-
-
