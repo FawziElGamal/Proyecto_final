@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login_user, logout_user, sign_up, my_profile
+from .views import login_user, logout_user, sign_up, my_profile, pass_change
 
 app_name = 'Users'
 
@@ -8,4 +8,5 @@ urlpatterns = [
     path('login/', login_user, name='LogIn'),
     path('logout/', logout_user, name='LogOut'),
     path('profile/', my_profile, name="EditProfile"),
+    path('profile/pass-change', pass_change, name="PassChange"),
 ]

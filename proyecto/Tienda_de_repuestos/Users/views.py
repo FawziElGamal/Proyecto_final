@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from .forms import SignUpForm, EditProfileForm
+from .forms import SignUpForm, EditProfileForm, ChangePass
 from django.contrib.auth.models import User
 from .models import Client
 from .signals import delete_old_avatar_file
@@ -106,3 +106,36 @@ def my_profile(request):
 
         form = EditProfileForm(initial={"first_name": user.first_name, "last_name": user.last_name, "email": user.email, "phone": user_info_list[1], "address": user_info_list[2]})
         return render(request, "Users/edit_profile.html", {"form": form, "user_info": user_info_list})
+    
+def pass_change(request):
+
+    user = request.user
+
+    if request.method == "POST":
+        form = ChangePass(request.POST)
+
+        print(form.is_valid())
+
+        if form.is_valid():
+            # form.save()
+
+            return redirect("Users:EditProfile")
+        
+        else:
+            print(form.error_messages.items())
+            messages.error(request, form.error_messages.items())
+
+
+
+    user_info = Client.objects.raw(f"SELECT * FROM Users_client WHERE user_id = {user.id}")
+    user_info_list = list()
+    for info in user_info:
+        user_info_list.append(info.dni)
+        user_info_list.append(info.phone)
+        user_info_list.append(info.address)
+        user_info_list.append(info.avatar)
+        user_info_list.append(info.url)
+
+    form = ChangePass(user=request.user)
+
+    return render(request, "Users/pass_change.html", {"form": form, "user_info": user_info_list})
