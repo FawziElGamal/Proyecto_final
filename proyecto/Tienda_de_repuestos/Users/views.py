@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, update_session_auth_hash
 from django.contrib import messages
 from .forms import SignUpForm, EditProfileForm, ChangePass
 from django.contrib.auth.models import User
@@ -109,15 +109,13 @@ def my_profile(request):
     
 def pass_change(request):
 
-    user = request.user
-
     if request.method == "POST":
-        form = ChangePass(request.POST)
-
-        print(form.is_valid())
+        form = ChangePass(request.user, request.POST)
 
         if form.is_valid():
-            # form.save()
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, "Contraseña actualizada correctamente.")
 
             return redirect("Users:EditProfile")
         
@@ -125,9 +123,10 @@ def pass_change(request):
             print(form.error_messages.items())
             messages.error(request, form.error_messages.items())
 
+    else:
+        form = ChangePass(user=request.user)
 
-
-    user_info = Client.objects.raw(f"SELECT * FROM Users_client WHERE user_id = {user.id}")
+    user_info = Client.objects.raw(f"SELECT * FROM Users_client WHERE user_id = {request.user.id}")
     user_info_list = list()
     for info in user_info:
         user_info_list.append(info.dni)
@@ -135,7 +134,5 @@ def pass_change(request):
         user_info_list.append(info.address)
         user_info_list.append(info.avatar)
         user_info_list.append(info.url)
-
-    form = ChangePass(user=request.user)
 
     return render(request, "Users/pass_change.html", {"form": form, "user_info": user_info_list})
