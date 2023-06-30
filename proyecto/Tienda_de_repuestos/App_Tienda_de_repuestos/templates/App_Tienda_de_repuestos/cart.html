@@ -45,7 +45,7 @@
                                     <input type="hidden" name="part_number" value="{{ value.part_number }}">
                                     <a href="{% url 'App_Tienda_de_repuestos:SubProduct' product_id=value.part_number %}" style="text-decoration: none;">-</a>
                                     <input type="number" name="cantidad" value="{{ value.quantity }}" min="1" readonly style="width: 48px;">
-                                    <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=value.part_number %}" style="text-decoration: none;">+</a>
+                                    <a href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=value.part_number %}?quantity=1" style="text-decoration: none;">+</a>
                                 </td>
                                 <td>${{ value.price }}</td>
                                 <td>${{ value.total_prices }}</td>

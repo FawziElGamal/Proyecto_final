@@ -14,20 +14,20 @@ class Cart:
         # else:
         self.cart = cart
 
-    def add_item(self, product):
+    def add_item(self, product, quantity=1):
         if (str(product.part_number) not in self.cart.keys()):
             self.cart[product.part_number] = {
                 "part_number": product.part_number,
                 "description": product.description,
                 "price": product.price_usd,
-                "quantity": 1,
+                "quantity": quantity,
                 "image": product.image.url,
                 "total_prices": product.price_usd
             }
         else:
             for key, value in self.cart.items():
                 if key==str(product.part_number):
-                    value["quantity"] = value["quantity"] + 1
+                    value["quantity"] = int(value["quantity"]) + 1
                     value["total_prices"] = float(Decimal(str(value["quantity"])) * Decimal(str(value["price"])))
                     break
 

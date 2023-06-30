@@ -150,9 +150,13 @@ def my_orders(request):
 def add_product(request, product_id):
     cart = Cart(request)
 
+    quantity = request.GET.get('quantity')
+
+    print(quantity)
+
     product = Product.objects.get(part_number=product_id)
 
-    cart.add_item(product)
+    cart.add_item(product, quantity)
 
     return redirect("App_Tienda_de_repuestos:Cart")
 
