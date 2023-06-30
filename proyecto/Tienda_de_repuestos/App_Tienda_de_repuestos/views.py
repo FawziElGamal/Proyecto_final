@@ -150,9 +150,8 @@ def my_orders(request):
 def add_product(request, product_id):
     cart = Cart(request)
 
-    quantity = request.GET.get('quantity')
+    quantity = int(request.GET.get('quantity'))
 
-    print(quantity)
 
     product = Product.objects.get(part_number=product_id)
 

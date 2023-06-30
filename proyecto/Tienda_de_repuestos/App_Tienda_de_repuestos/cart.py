@@ -27,7 +27,7 @@ class Cart:
         else:
             for key, value in self.cart.items():
                 if key==str(product.part_number):
-                    value["quantity"] = int(value["quantity"]) + 1
+                    value["quantity"] = value["quantity"] + 1
                     value["total_prices"] = float(Decimal(str(value["quantity"])) * Decimal(str(value["price"])))
                     break
 

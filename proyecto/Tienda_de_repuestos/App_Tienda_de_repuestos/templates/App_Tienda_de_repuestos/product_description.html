@@ -20,14 +20,18 @@
                             <div class="small mb-1">SKU: {{ info.part_number }}</div>
                             <h1 class="display-5 fw-bolder">{{ info.description }}</h1>
                             <div class="fs-5 mb-5">
-                                <span class="text-decoration-line-through">${{ info.price_uds|add:"-10" }}</span>
+                                <span class="text-decoration-line-through">${{ info.price_usd|add:"-10" }}</span>
                                 <span>${{ info.price_usd }}</span>
                             </div>
                             <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
-                            <div class="d-flex">
-                                <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=info.part_number %}">Añadir al carrito</a></div>
-                            </div>
+                            
+                            <form method="GET" action="{% url 'App_Tienda_de_repuestos:AddProduct' product_id=info.part_number %}">
+                                    <div class="d-flex">
+                                    {% csrf_token %}
+                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" style="max-width: 4.5rem" />
+                                    <div class="text-center"><button type="submit" class="btn btn-outline-dark mt-auto">Añadir al carrito</button></div>
+                                </div>
+                            </form>
                                                
                         </div>
 
