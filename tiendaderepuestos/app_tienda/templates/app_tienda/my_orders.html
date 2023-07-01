@@ -1,0 +1,121 @@
+{% extends "app_tienda/base.html" %}
+
+{% block title %} Mis pedidos {% endblock title %}
+
+{% block maintitle %} Mis pedidos {% endblock maintitle %}
+
+{% block subtitule %} Todos mis pedidos generados {% endblock subtitule %}
+
+{% block body %}
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+
+    <div>
+        {% if unpaid_orders_list != 0 %}
+        
+    <h2>Pendientes de pago</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Número de pedido</th>
+                <th>Cliente</th>
+                <th>Productos</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Monto total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order_item in unpaid_orders_list %}
+
+                <tr>
+                <td>{{ order_item.order.id }}</td>
+                <td>{{ order_item.order.client_dni_id }}</td>
+                <td>
+                <ul>
+                    {% for product in order_item.products %}
+                    <li>{{ product.part_number_id }}</li>
+                    {% endfor %}
+                </ul>
+                </td>
+                <td>
+                    <ul>
+                    {% for description in order_item.descriptions %}
+                        <li>{{ description.description }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                <ul>
+                    {% for product in order_item.products %}
+                        <li>{{ product.quantity }}</li>
+                    {% endfor %}
+                </ul>
+                </td>
+                <td>${{ order_item.total_price }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        {% endif %}
+
+    <div>
+    <br>
+    <h2>Pagados</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Número de pedido</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Monto total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order_item in paid_orders_list %}
+        <tr>
+            <td>{{ order_item.order.id }}</td>
+            <td>{{ order_item.order.client_dni_id }}</td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                    <li>{{ product.part_number_id }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>
+            <ul>
+                {% for description in order_item.descriptions %}
+                    <li>{{ description.description }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                    <li>{{ product.quantity }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>${{ order_item.total_price }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+{% endblock body %}

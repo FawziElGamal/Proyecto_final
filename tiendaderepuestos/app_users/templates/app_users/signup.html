@@ -1,0 +1,27 @@
+{% extends "app_tienda/base.html" %}
+    {% block title %} Nuevo cliente {% endblock title %}
+
+    {% block body %}
+
+        <form action="" method="POST">
+            {% csrf_token %}
+
+        <table>      
+            {{form.as_table}}
+        </table>   
+            <br>   
+            <input type="submit" class="btn btn-success" value="Enviar">
+
+        </form>
+
+        <br>
+
+        {% if messages %}
+            <div class="error">
+            {% for msg in messages %}
+                <p style="color: red; font-weight: bold; font-size: 20px;">{{ msg }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+    {% endblock body %}

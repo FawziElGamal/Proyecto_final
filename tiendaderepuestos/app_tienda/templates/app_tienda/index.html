@@ -1,0 +1,65 @@
+{% extends "app_tienda/base.html" %}
+    {% block body %}
+
+    <form action="" method="GET" class="d-flex" role="search" style="max-width: 400px; margin-top: 10px; margin-left: 10px;">
+        <input class="form-control me-2" name="search" type="search" placeholder="Ingrese su búsqueda" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Buscar</button>
+    </form>
+
+            <section class="py-5">
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                        {% for product in products %}
+                        <div class="col mb-5">
+                            <div class="card h-100">
+
+                                {% if product.quantity > 0 %}
+                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">En stock</div>
+                                {% else %}
+                                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Agotado</div>
+                                {% endif %}
+
+                                <!-- Product image-->
+                                <a href="{% url 'app_tienda:IndividualProduct' product_id=product.part_number %}">
+                                    <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                  </a>
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <a href="{% url 'app_tienda:IndividualProduct' product_id=product.part_number %}" style="text-decoration: none; color: black;">
+                                            <h5 class="fw-bolder">{{ product.description }}</h5>
+                                          </a>
+
+                                        <div class="d-flex justify-content-center small text-warning mb-2">
+                                            {% for _ in producto.calificacion|make_list %}
+                                            <div class="bi-star-fill"></div>
+                                            {% endfor %}
+                                        </div>
+
+                                        {% if producto.en_oferta %}
+                                        <span class="text-muted text-decoration-line-through">{{ producto.precio_anterior }}</span>
+                                        {% endif %}
+
+                                        ${{ product.price_usd }}
+                                    </div>
+                                </div>
+                                {% if product.quantity > 0 %}
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" href="{% url 'app_tienda:AddProduct' product_id=product.part_number %}?quantity=1">Añadir al carrito</a>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" href="#">Consulte stock</a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+    {% endblock body %}

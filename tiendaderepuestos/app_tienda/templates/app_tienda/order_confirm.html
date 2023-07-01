@@ -1,0 +1,18 @@
+{% extends "app_tienda/base.html" %}
+    {% block body %}
+
+        <h1>Pedido confirmado!</h1>
+
+        <h5>Su número de pedido es el {{order_id}}</h5>
+
+        <h5>Muchas gracias por confiar en nosotros!</h5>
+
+        {% if user.is_staff %}
+            <h6>Pulse <a href="{% url 'app_tienda:AllOrders' %}">aquí</a> para ver todos los pedidos.</h6>
+        {% else %}
+            <h6>Pulse <a href="{% url 'app_tienda:MyOrders' %}">aquí</a> para ver todos sus pedidos.</h6>
+        {% endif %}
+
+        <h6>Pulse <a href="{% url 'app_tienda:Products' %}">aquí</a> para volver a la página principal.</h6>
+
+    {% endblock body %}

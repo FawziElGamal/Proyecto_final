@@ -1,0 +1,82 @@
+{% extends "app_tienda/base.html" %}
+<!DOCTYPE html>
+
+{% load static %}
+
+<title>{% block title %} {% endblock title %}</title>
+{% block maintitle %}  {% endblock maintitle %}
+{% block subtitule %}  {% endblock subtitule %}
+
+    {% block body %}
+
+        <!-- Product section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    {% for info in product %}
+
+                        <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ info.image.url }}" alt="..." /></div>
+                        <div class="col-md-6">
+                            <div class="small mb-1">SKU: {{ info.part_number }}</div>
+                            <h1 class="display-5 fw-bolder">{{ info.description }}</h1>
+                            <div class="fs-5 mb-5">
+                                <span class="text-decoration-line-through">${{ info.price_usd|add:"-10" }}</span>
+                                <span>${{ info.price_usd }}</span>
+                            </div>
+                            <p class="lead">{{ info.long_description }}</p>
+                            
+                            <form method="GET" action="{% url 'app_tienda:AddProduct' product_id=info.part_number %}">
+                                    <div class="d-flex">
+                                    {% csrf_token %}
+                                    <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="number" value="1" style="max-width: 4.5rem" />
+                                    <div class="text-center"><button type="submit" class="btn btn-outline-dark mt-auto">Añadir al carrito</button></div>
+                                </div>
+                            </form>
+                                               
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Related items section-->
+        <section class="py-5 bg-light">
+            <div class="container px-4 px-lg-5 mt-5">
+                <h2 class="fw-bolder mb-4">Productos relacionados</h2>
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {% for product in allproducts %}
+
+                            <div class="col mb-5">
+                                <div class="card h-100">
+                                    <!-- Product image-->
+                                    <a href="{% url 'app_tienda:IndividualProduct' product_id=product.part_number %}">
+                                        <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                                    </a>
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center">
+                                            <!-- Product name-->
+                                            <a href="{% url 'app_tienda:IndividualProduct' product_id=product.part_number %}" style="text-decoration: none; color: black;">
+                                                <h5 class="fw-bolder">{{ product.description }}</h5>
+                                            </a>
+                                            <!-- Product price-->
+                                            <span class="text-muted text-decoration-line-through">${{ product.price_uds|add:"-10" }}</span>
+                                            ${{ product.price_usd }}
+                                        </div>
+                                    </div>
+                                    <!-- Product actions-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'app_tienda:AddProduct' product_id=product.part_number %}">Añadir al carrito</a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+    {% endblock body %}

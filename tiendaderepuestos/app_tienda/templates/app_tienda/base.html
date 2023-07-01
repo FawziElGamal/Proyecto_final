@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <title>{% block title %} Toyota Barny - Tienda {% endblock title %}</title>
+
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'pages/assets/favicon.ico' %}" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'app_tienda/css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <img src="{% static 'app_tienda/assets/logo.png' %}" alt="Logo" style="width: 40px; padding-right: 10px;">
+                <a class="navbar-brand" href="{% url 'app_tienda:Products' %}">Toyota Barny</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'app_tienda:Products' %}">Home/Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'pages:Home' %}">Acerca de nosotros</a></li>
+                        <li class="nav-item dropdown">
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <a href="{% url 'app_tienda:Cart' %}" class="btn btn-outline-dark" style="margin-top: 0px; font-size: 1rem; width: 130px; height: 40px;">
+                            <i class="bi-cart-fill me-1"></i>
+                            Carrito
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">{{ quantity }}</span>
+                        </a>
+    
+                        {% if user.is_authenticated %}
+
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                                {% if user.is_staff %}
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; margin-bottom: 10px; margin-left: 10px;">
+                                        <img src="{{ user.client.avatar.url }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Hola {{ user.username }}!</a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="{% url 'app_tienda:AllOrders' %}">Órdenes</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_users:EditProfile' %}">Mi perfil</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_users:PassChange' %}">Cambiar contraseña</a></li>
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; overflow: hidden; margin-bottom: 10px; margin-left: 10px;">
+                                        <img src="{{ user.client.avatar.url }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hola {{ user.username }}!</a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="{% url 'app_tienda:MyOrders' %}">Mis órdenes</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_users:EditProfile' %}">Mi perfil</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_users:PassChange' %}">Cambiar contraseña</a></li>
+                                        </ul>
+                                    </li>
+
+                        {% endif %}
+
+                                <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'app_users:LogOut' %}">Cerrar sesión</a></li>
+                            </ul>
+                        {% else %}
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                                <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'app_users:LogIn' %}">Iniciar sesión</a></li>
+                                <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'app_users:SignUp' %}">Registrate</a></li>
+                            </ul>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <img src="{% static 'pages/assets/logo.png' %}" alt="Logo" style="width: 120px;padding-right: 10px;">
+                    <h1 class="display-4 fw-bolder">{% block maintitle %} Toyota Barny - Tienda {% endblock maintitle %}</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">{% block subtitule %} Todos nuestros productos {% endblock subtitule %}</p>
+                </div>
+            </div>
+        </header>
+
+        
+    {% block body %}
+
+    {% endblock body %}
+
+
+    
+                <!-- Footer-->
+                <footer class="py-5 bg-dark">
+                    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Fawzi El Gamal 2023</p></div>
+                </footer>
+                <!-- Bootstrap core JS-->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+                <!-- Core theme JS-->
+                <script src="{% static 'app_tienda/js/scripts.js' %}"></script>
+            </body>
+        </html>
