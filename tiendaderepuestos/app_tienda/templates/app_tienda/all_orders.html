@@ -1,0 +1,130 @@
+{% extends "app_tienda/base.html" %}
+
+{% block title %} Órdenes {% endblock title %}
+
+{% block maintitle %} Pedidos {% endblock maintitle %}
+
+{% block subtitule %} Todos los pedidos generados {% endblock subtitule %}
+
+{% block body %}
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+
+    <form method="POST"> 
+    {% csrf_token %} 
+    <div>
+    <h2>Pendientes de pago</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Número de pedido</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Monto total</th>
+        {% if user.is_staff %}
+            <th>Pagado</th>
+        {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for order_item in unpaid_orders_list %}
+        <tr>
+            <td>{{ order_item.order.id }}</td>
+            <td>{{ order_item.order.client_dni_id }}</td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                <li>{{ product.part_number_id }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>
+                <ul>
+                {% for description in order_item.descriptions %}
+                <li>{{ description.description }}</li>
+                {% endfor %}
+                </ul>
+            </td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                <li>{{ product.quantity }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>${{ order_item.total_price }}</td>
+
+            {% if user.is_staff %}
+                <td><input type="checkbox" name="order_paid" value="{{ order_item.order.id }}"/></td>
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+        <input type="submit" value="Actualizar registros">
+    </div>
+    </form>
+
+    <div>
+    <br>
+    <h2>Pagados</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Número de pedido</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Descripción</th>
+            <th>Cantidad</th>
+            <th>Monto total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order_item in paid_orders_list %}
+        <tr>
+            <td>{{ order_item.order.id }}</td>
+            <td>{{ order_item.order.client_dni_id }}</td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                <li>{{ product.part_number_id }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>
+            <ul>
+                {% for description in order_item.descriptions %}
+                    <li>{{ description.description }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>
+            <ul>
+                {% for product in order_item.products %}
+                <li>{{ product.quantity }}</li>
+                {% endfor %}
+            </ul>
+            </td>
+            <td>${{ order_item.total_price }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+{% endblock body %}
