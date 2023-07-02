@@ -5,9 +5,9 @@ _El proyecto que se presenta tiene el propósito de servir como "Proyecto Final"
 
 <br>
 
-# Recorrida por la página
+# Recorrida por la página - Video de Youtube
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VaPS8akQOsw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Alt text](https://img.youtube.com/vi/MyrobCSO9ZA/0.jpg)](https://www.youtube.com/watch?v=MyrobCSO9ZA)
 
 ---
 
