@@ -220,7 +220,13 @@ def confirm_order(request):
         for result in product_price:
             quantity = quantities[i]
             OrderProducts.objects.create(order_id_id=order.id, part_number_id=part_number, unit_price=result.price_usd, quantity=quantity)
+            product = Product.objects.filter(part_number=part_number)
 
+            for info in product:
+                original_quantity = info.quantity
+            product.update(quantity=int(original_quantity) - int(quantity))
+
+            
     clear_cart(request)
 
         
