@@ -148,14 +148,15 @@ def my_orders(request):
     return render(request, "app_tienda/my_orders.html", {'unpaid_orders_list': unpaid_orders_list, 'paid_orders_list': paid_orders_list})
 
 def add_product(request, product_id):
-    cart = Cart(request)
+    if request.user.is_authenticated:
+        cart = Cart(request)
 
-    quantity = int(request.GET.get('quantity'))
+        quantity = int(request.GET.get('quantity'))
 
 
-    product = Product.objects.get(part_number=product_id)
+        product = Product.objects.get(part_number=product_id)
 
-    cart.add_item(product, quantity)
+        cart.add_item(product, quantity)
 
     return redirect("app_tienda:Cart")
 

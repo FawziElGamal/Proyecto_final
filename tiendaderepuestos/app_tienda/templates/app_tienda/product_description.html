@@ -20,7 +20,7 @@
                             <div class="small mb-1">SKU: {{ info.part_number }}</div>
                             <h1 class="display-5 fw-bolder">{{ info.description }}</h1>
                             <div class="fs-5 mb-5">
-                                <span class="text-decoration-line-through">${{ info.price_usd|add:"-10" }}</span>
+                                <span class="text-decoration-line-through">${{ info.price_usd|add:"10" }}</span>
                                 <span>${{ info.price_usd }}</span>
                             </div>
                             <p class="lead">{{ info.long_description }}</p>
@@ -63,7 +63,7 @@
                                                 <h5 class="fw-bolder">{{ product.description }}</h5>
                                             </a>
                                             <!-- Product price-->
-                                            <span class="text-muted text-decoration-line-through">${{ product.price_uds|add:"-10" }}</span>
+                                            <span class="text-muted text-decoration-line-through">${{ info.price_usd|add:"10" }}</span>
                                             ${{ product.price_usd }}
                                         </div>
                                     </div>

@@ -22,7 +22,7 @@ class Cart:
                 "price": product.price_usd,
                 "quantity": quantity,
                 "image": product.image.url,
-                "total_prices": product.price_usd
+                "total_prices": float(Decimal(quantity) * Decimal(product.price_usd))
             }
         else:
             for key, value in self.cart.items():
@@ -48,6 +48,7 @@ class Cart:
         for key, value in self.cart.items():
             if key==str(product.part_number):
                 value["quantity"] = value["quantity"] - 1
+                value["total_prices"] = float(Decimal(str(value["quantity"])) * Decimal(str(value["price"])))
                 if value["quantity"] < 1:
                     self.erase_product(product)
                 break    

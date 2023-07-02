@@ -51,7 +51,7 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Hola {{ user.username }}!</a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="{% url 'app_tienda:AllOrders' %}">Órdenes</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_tienda:AllOrders' %}">Pedidos</a></li>
                                             <li><a class="dropdown-item" href="{% url 'app_users:EditProfile' %}">Mi perfil</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{% url 'app_users:PassChange' %}">Cambiar contraseña</a></li>
@@ -64,7 +64,7 @@
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hola {{ user.username }}!</a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            <li><a class="dropdown-item" href="{% url 'app_tienda:MyOrders' %}">Mis órdenes</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'app_tienda:MyOrders' %}">Mis pedidos</a></li>
                                             <li><a class="dropdown-item" href="{% url 'app_users:EditProfile' %}">Mi perfil</a></li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li><a class="dropdown-item" href="{% url 'app_users:PassChange' %}">Cambiar contraseña</a></li>

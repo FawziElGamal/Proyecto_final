@@ -1,4 +1,5 @@
 {% extends "app_tienda/base.html" %}
+{% block subtitule %} Carrito de compras {% endblock subtitule %}
     {% block body %}
         <html>
             <head>
@@ -65,7 +66,7 @@
                 <br>
                 <a href="{% url 'app_tienda:ClearCart' %}" style="padding-left: 10px;">Vaciar carrito</a>
                 <div class="total" style="padding-left: 10px;">
-                    Precio Total: ${{ total_price }}
+                    Subtotal: ${{ total_price }}
                 </div>
                 <br>
                 <input type="submit" class="btn btn-success" value="Confirmar pedido">

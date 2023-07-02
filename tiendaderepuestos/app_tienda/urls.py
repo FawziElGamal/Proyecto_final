@@ -5,6 +5,7 @@ app_name = 'app_tienda'
 
 urlpatterns = [
     path('products/', products, name='Products'),
+    path('index/', products, name='Products'),
     path('all-orders/', all_orders, name='AllOrders'),
     path('my-orders/', my_orders, name='MyOrders'),
     path('my-cart/', shop_cart, name='Cart'),
