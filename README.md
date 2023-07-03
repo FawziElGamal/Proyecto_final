@@ -63,8 +63,8 @@ La misma se encuentra dividida en 5 secciones las cuales son accesibles mediante
 
 * **Acerca de nosotros:** La cual ofrece una breve reseña acerca de la tienda.
 * **Servicios:** En donde se destacan algunas cualidades o servicios distintivos del negocio.
-* **Productos:** Algunos productos que el negocio comercializa, exhibidos en ramas generales o familias de repuestos. Las imagenes pueden seleccionarse para visualizarlas en mayor tamaño en forma de carrusel 
-* **Tienda:** La cual redirecciona a la tienda en linea
+* **Productos:** Algunos productos que el negocio comercializa, exhibidos en ramas generales o familias de repuestos. Las imagenes pueden seleccionarse para visualizarlas en mayor tamaño en forma de carrusel. 
+* **Tienda:** La cual redirecciona a la tienda en linea.
 * **Contacto:** Ofrece un formulario de contacto para que las personas puedan dejar sus consultas. Las consultas enviadas pueden visualizarse desde la página de administrador accediendo a la tabla "Contact".  
 -Estuvo en plan la opción de sumar la funcionalidad que las consultas sean enviadas a través de email, no obstante para ello se hacía necesario crear una nueva casilla de correo exclusiva para que funcione como motor de envío, configurar el servidor SMTP y demás configuraciones que además requererían exponer las credenciales. Por que lo que por motivos de seguridad se descartó la posibilidad y se optó por el almacenamiento en una base de datos-.
 
@@ -127,7 +127,7 @@ El mismo consta de un formulario simple de registro, en donde se solicita:
 * **Nombre de usuario**
 * **Contraseña**  
 
-Algunos de éstos campos tienen requerimientos espciales los cuales se encuentran detallados debajo de cada campo en cuestión. 
+Algunos de éstos campos tienen requerimientos especiales los cuales se encuentran detallados debajo de cada campo en cuestión. 
 Los datos mas alla de _Nombre de usuario_, _Email_ y _Contraseña_ son solicitados teniendo en cuenta que se trata de una tienda la cual trabaja con pedidos en donde los mismos deben ser correctamente indentificables con quien haya realizado la compra. 
 
 En caso de haber superado satisfactoriamente el registro (caso contrario se expondrá un mensaje de error), usted será redirigido a la página de inicio ya siendo logueado en donde podrá continuar navegando y comprando dentro del sitio.
@@ -141,7 +141,7 @@ El formulario contará con dos campos:
 * **Nombre de usuario**
 * **Contraseña**
 
-Una vez los mismos sean rellenados con los datos correspondientes, presione en el boton **_Enviar_** para iniciar sesión. Se haber ingresado de forma correcta, será redirigido a la página principal, caso contrario de expondrá un mensaje de error.
+Una vez los mismos sean rellenados con los datos correspondientes, presione en el boton **_Enviar_** para iniciar sesión. De haber ingresado de forma correcta, será redirigido a la página principal, caso contrario de expondrá un mensaje de error.
 
 Para cerrar la sesión sitúese en la barra de navegación en el extremo derecho y seleccione **_Cerrar sesión_**.
 
@@ -215,7 +215,7 @@ Obervando cada linea de izquierda a derecha, primeramente se observa el nombre d
 Luego, donde se exhibe la cantidad, se encuentra un boton con un "signo menos" _("-")_, el cual se encarga de restar 1 unidad del producto en cuestion. En caso de solo haber seleccionado 1 unidad, al restar la misma el producto desaparecerá del carrito.  
 Análogamente, a la derecha del cuadro se observa un "signo más" (_"+"_) el cual cumple la función de agregar 1 unidad del producto en cuestión.  
 La siguiente columna muestra el valor unitario del producto el cual al multiplicarlo por la cantidad seleccionada, muestra el valor presente en la columna _"Precio total"_.  
-Debajo de la sección de productos, se encuentra el botón _Vaciar carrito_, el cual borra todos los articulos y sus respectivas cantidades (en caso de tener varios) del carrito, en caso que el usuario desista de continuar la compra.  
+Debajo de la sección de productos, se encuentra el botón _Vaciar carrito_, el cual borra todos los articulos y sus respectivas cantidades (de tener varias) del carrito, en caso que el usuario desista de continuar la compra.  
 Por utlimo, se exhibe el _**Subtotal**_ el cual es el resultado de sumar los _Precios Totales_ de todos los articulos.
 
 <br>
@@ -257,7 +257,7 @@ Esta sección es dinámica y el contenido que mostrará dependerá de los privil
 
 <br>
 
-* Usuario que sea parte del staff: Este tipo de perfiles estan pensados para quienes se encargarán de administrar la página. Ellos (entre otras cosas) verán los pedidos generados por todos los usuarios y podrán declarar como pagados los mismos.  
+* Usuario que sea parte del staff: Este tipo de perfiles estan pensados para quienes se encargarán de administrar la página. Ellos verán (entre otras cosas) los pedidos generados por todos los usuarios y podrán declarar como pagados los mismos.  
 Dado que el proyecto no se encuentra en producción, no se poseen metodos de pago reales, por que lo se optó por utilizar una confirmación de pago manual mediante un checkbox a la derecha de cada pedido. La forma de confirmar un pago consta de seleccionar el checkbox de el/los pedido/s que se desean atestiguar como pagados y luego presionar el botón _**Actualizar registros**_. Con esto, todos estos pedidos pagados pasarán a la sección _**"Pagados"**_ en donde los cada usuario tambien podrá ver este cambio desde su sección de pedidos.
 
 <image
@@ -287,7 +287,10 @@ Cualquier otra acción que se desee realizar debe solicitarse elevación dado qu
 
 <br>
 
---- <a name="final"></a>
+
+<a name="final"></a>
+
+--- 
 
 Habriendo cubrido todas las secciones que componen a esta página web, damos por finalizada esta guía explicativa. No obstante, cualquier consulta o comentario pueden escribirme a mi dirección de correo: fawzielgamal@icloud.com
 
